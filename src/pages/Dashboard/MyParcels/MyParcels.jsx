@@ -90,7 +90,7 @@ const MyParcels = () => {
               <td>{parcel.type}</td>
               <td>{parcel.receiver_name}</td>
               <td>{parcel.total_cost}</td>
-              <td>{parcel.payment_status}</td>
+              <td className={parcel.payment_status ==='paid'? 'text-green-500': 'text-red-600'}>{parcel.payment_status}</td>
               <td>{formatDate(parcel.creation_date)}</td>
               <td className="flex justify-center space-x-2">
                 <button
@@ -101,6 +101,7 @@ const MyParcels = () => {
                 </button>
                 <button
                   onClick={() => onPay(parcel._id)}
+                  disabled={parcel.payment_status ==='paid' && true}
                   className="btn btn-sm btn-success"
                 >
                   Pay

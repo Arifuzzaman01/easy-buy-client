@@ -1,8 +1,23 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router";
 import ProFastLogo from "../../Home/shared/logo/ProfastLogo";
+import {
+  FaHome,
+  FaBox,
+  FaHistory,
+  FaSearchLocation,
+  FaUserEdit,
+  FaMotorcycle,
+  FaHourglassHalf,
+  FaUserShield,
+} from "react-icons/fa";
+
+import useUserRole from "../../hooks/useUserRole";
 
 const DashboardLayout = () => {
+  const { roleLoading, role } = useUserRole();
+  if (roleLoading) return <p>loading...</p>;
+  console.log(role);
   return (
     <div className="drawer lg:drawer-open w-11/12 mx-auto ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -55,15 +70,64 @@ const DashboardLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 space-y-3">
           {/* Sidebar content here */}
           <ProFastLogo></ProFastLogo>
+
           <li>
-            <a>Home</a>
+            <NavLink to="/dashboard">
+              <FaHome className="inline-block mr-2" /> Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to='/dashboard/myParcels'>My Parcel</NavLink>
+            <NavLink to="/dashboard/myParcels">
+              <FaBox className="inline-block mr-2" /> My Parcel
+            </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/paymentHistory">
+              <FaHistory className="inline-block mr-2" /> Payment History
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/track">
+              <FaSearchLocation className="inline-block mr-2" /> Track Parcel
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/updateProfile">
+              <FaUserEdit className="inline-block mr-2" /> Update Profile
+            </NavLink>
+          </li>
+          {/* Riders */}
+
+          {role === "admin" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/activeRiders">
+                  <FaMotorcycle className="inline-block mr-2" /> Active Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/pendingRiders">
+                  <FaHourglassHalf className="inline-block mr-2" /> Pending
+                  Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/makeAdmin">
+                  <FaUserShield className="inline-block mr-2" />
+                  Make Admin
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/assignRider">
+                  <FaMotorcycle className="inline-block mr-2" />
+                  Assign Rider
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
